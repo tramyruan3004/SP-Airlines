@@ -74,33 +74,9 @@ module.exports = {
         });
     },
 
-// Endpoint 10 DELETE /flight/:id
-    deleteFlight: (flightid, callback)=> {
-        var conn = db.getConnection();
-        conn.connect(function (err) {
-            if (err) {
-                console.log(err);
-                return callback(err,null);
-            }
-            else {    
-                console.log("Connected: Inside flights.js deleteFlight()!");
-                var sql = 'Delete from flights where flightid=?';
-                conn.query(sql, [flightid], function (err, result) {
-                    conn.end();
-                    if (err) {
-                        console.log(err);
-                        return callback(err,null);
-                    } else {
-                        return callback(null,result);
-                    }
-                });
-            }        
-        });  
-        
-    },
 
-// Endpoint 11 GET /transfer/flight/:originAirportId/:destinationAirportId
-    getTransfer: (originAirportid, destinationAirportid, callback)=>{
+// Endpoint 11 GET /transfer/flight/:originAirportId/:destinationAirportId --used
+    getTransfer: (originAirportid, destinationAirportid, departureDateInput, callback)=>{
         var conn = db.getConnection();
         conn.connect(function (err) {
             if (err) {
@@ -112,10 +88,7 @@ module.exports = {
                 var sql = 
                 `
                 SELECT 
-                    f1.flightid AS firstFlightId, f2.flightid AS secondFlightId,
-                    f1.flightCode AS flightCode1, f2.flightCode AS flightCode2,
-                    f1.aircraft AS aircraft1, f2.aircraft AS aircraft2,
-                    a1.name AS originAirport, a2.name AS transferAirport, a3.name AS destinationAirport, sum(f1.price+f2.price) AS "Total price"
+                    f1.flightid AS firstFlightId, f2.flightid AS secondFlightId, f1.embarkDate AS firstFlightEmbarkDate, f1.embarkTime AS firstFlightEmbarkTime, f2.arrivedDate AS secondFlightArrivedDate, f2.arrivedTime AS secondFlightArrivedTime, f1.flightCode AS flightCode1, f2.flightCode AS flightCode2, f1.aircraft AS aircraft1, f2.aircraft AS aircraft2, a1.country AS originCountry, a2.country AS transferCountry, a3.country AS destinationCountry, a1.shortform AS originAirportShortform, a2.shortform AS transferAirportShortform, a3.shortform AS destinationAirportShortform,  a1.name AS originAirport, a2.name AS transferAirport, a3.name AS destinationAirport, sum(f1.price+f2.price) AS price
                 FROM 
                     flights f1
                 JOIN
@@ -138,8 +111,10 @@ module.exports = {
                     f1.originAirportid = ?
                 AND
                     f2.destinationAirportid = ?
+                AND
+                    f1.embarkDate = ?
                 `;
-                conn.query(sql, [originAirportid, destinationAirportid], function (err, result) {
+                conn.query(sql, [originAirportid, destinationAirportid, departureDateInput], function (err, result) {
                     conn.end();
                     if (err) {
                         console.log(err);
@@ -151,11 +126,4 @@ module.exports = {
             }
         });
     },
-
-
-
-
-
-
-    
 }

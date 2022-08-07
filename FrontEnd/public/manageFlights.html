@@ -1,417 +1,464 @@
+<!--
+        Module Code	:	        ST0503
+        Module Name	:	        Back-End Web Development
+        Acad Year/Semester	:	2022/2023 Semester 1
+        Assignment Title	:	CA2 – SP Air Website
+    
+        SP Airlines - Manage Flights | Official website
+        Author: Ruan Chamei
+    
+        Filename: manageFlights.html
+-->
 <!DOCTYPE html>
 <html lang="en">
-    <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"/>
-            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet">
-            <title>SP Airlines - Manage Airports | Official website</title>
-            <link rel="icon" type="image/x-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgyj-JPkyNW4pC8pDJgy7wfW4-MK87ycdFLBm19zw5m5tnwQ8cSg6gKO2hC5uxYscbOYc_GTVjxSyFGa2r8ae-eVoVd2t0umPfQi9wN50Ha5vc_GzCeQLT-EcBEbi-_GdaQSPc1Y5BwtdJgqhTUNVYAnIjVjxr07rmdzE1SE5C12Y-meWuXwxATF2WYVA/s135/spairLogo.png">
-    
-            <!-- links to external javascript files and the javascript file to generate random quote functionality -->
-            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-            <script src="../js/randomQuote.js"></script>
-            <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-            <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        </head>
-    <body>
-        <header>
-            <!-- the start of the nav bar -->
-            <div id="navBar" class="navbar d-flex align-items-center w-100 m-0 p-0 navbar-expand-lg">
-                <!-- the collapse of the nav bar if the width of the screen decrease (lg) -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#subNav" aria-controls="subNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <!-- the logo and the name brand -->
-                <a class="navbar-brand" href="#">
-                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHXIf5q-XY_VsTwml7tKNw9ekiDbH64w2_PQxhP7TIw_5ljaCmCp4pqLREKwMesT1IaiMSsrc6EcMfZaY_OeC1qExZ86XX7V4nWZ9WSsoQcuNZlI6f-5HC3fSnzfX9UuCpA-ph9-gLB8WlPte9Txk7JXOE-RPh0UTIw2ZTiuTd_TrF9CfvyqX8_OgtSQ/s1413/spairNavLogo.png" width="230" height="90" alt="">
-                </a>
-    
-                <div class="container m-0 p-0">
-                    <div class="collapse navbar-collapse" id="subNav">
-                        <!-- the nav bar menu to access to other pages -->
-                        <ul class="navbar-nav ps-4 mx-auto" id="menuNav">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="/deals/" >DEALS</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/">BOOK + PLANS</a>
-                            </li>
-                            <li class="nav-item dropdown" >
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false"><u>TRAVEL INFO</u></a>
-                                <ul class="dropdown-menu" id="navTravel">
-                                    <li><a class="dropdown-item" href="/covid19/" >COVID 19</a></li>
-                                    <li><a class="dropdown-item" href="/checkin/" >CHECK IN</a></li>
-                                    <li><a class="dropdown-item" href="/contactus/" ><u>CONTACT US</u></a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/feedback/" >FEEDBACK</a>
-                            </li>
-                        </ul>
-                    </div>
-    
-                    <div id="col3" class="col col-3 align-items-center">
-                        <!-- 3 buttons to use some external functionalities -->
-                        <div class="row" id='threebuttons'>
-                            <!-- search bar functionality with the use of offcanvas -->
-                            <div class="col col-4 col-lg-4 col-sm-4">
-                                <button class="btn btn-default" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop"><i class="fas fa-search"></i></button>
-                                <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
-                                <div class="offcanvas-header">
-                                    <h5 id="offcanvasTopLabel">Looking for something?</h5>
-                                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                </div>
-                                <div class="offcanvas-body">
-                                    <form class="d-flex">
-                                        <input class="form-control w-50" type="search" placeholder="Click here to type" aria-label="Search">
-                                        <button id="searchButton" class="btn border bg-white btn-sm ms-2" type="submit">Search</button>
-                                    </form>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="col col-4 col-lg-4 col-sm-4">
-                                <!-- the quote generator functionality with the use of modal-->
-                                <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#randomModal">
-                                    <i class="fas fa-sync-alt"></i>
-                                </button>
-                                
-                                <!-- Modal -->
-                                <div class="modal fade" id="randomModal" tabindex="-1" aria-labelledby="randomModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title" id="randomModalLabel">Day day up up &#127849;&#127848;&#127789;&#127854;&#127853;</h4>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-    
-                                            <div class="modal-body">
-                                                <h2 id="theContent" class="fst-italic"></h2>
-                                                <h5 id="theAuthor" class="text-end"></h5>
-                                            </div>
-    
-                                            <div class="modal-footer">
-                                                <button id="generateForMe" type="button" class="btn btn-default">Get the gift of the day-ie &#127873;</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- the end of the nav bar -->
-            <script>
-                const baseUrl = "http://localhost:8081";
-                if(localStorage.getItem("token") == null){ // if no token in local storage , then do log in
-                    console.log('inside no token')
-                    const logInFormHtml = `
-                    <div class="col col-4 col-lg-4 col-sm-4" id="signInDiv">
-                    <!-- sign in account functionality with the use of dropdown-menu -->
-                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-user"></i>
-                        </button>
-                        <!-- Dropdown-menu -->
-                        <div class="dropdown-menu w-25 dropdown-menu-end">
-                            <form class="px-4 py-3" id="login-form">
-                                <div class="mb-3">
-                                    <label for="dropDownFormUsername" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="dropDownFormUsername" placeholder="Singapore Polytechnic">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="dropDownFormPwd" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="dropDownFormPwd" placeholder="Password">
-                                </div>
-                                <div class="mb-3" id="loginFunctions">
-                                    <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="dropdownCheck">
-                                    <label class="form-check-label" for="dropdownCheck">
-                                        Remember me
-                                    </label>
-                                    </div>
-                                </div>
-                                <button id="signIn" type="submit" class="btn bg-light border">Sign in</button>
-                            </form>
-                            <div class="dropdown-divider"></div>
-                            <div id = "signInDisappear">
-                                <a class="dropdown-item" id="signUpLink" href="/signup/">New around here? Sign up&#128123;</a>
-                            </div>
-                        </div>
-                    </div>
-                    `
-                    $('#threebuttons').append(logInFormHtml)
-                    $("#login-form").submit((event) => {
-                        // prevent page reload
-                        event.preventDefault();
-        
-                        const username = $("#dropDownFormUsername").val();
-                        const password = $("#dropDownFormPwd").val();
-                        const requestBody = {
-                            username: username,
-                            password: password
-                        };
-        
-                        axios.post(`${baseUrl}/login/`, requestBody)
-                            .then((response) => {
-                                const token = response.data.token;
-                                const loggedInUserID = response.data.user_id;
-                                const loggedInUsername = response.data.username;
-                                const loggedInUserRole = response.data.role
-                                localStorage.setItem("token", token);
-                                localStorage.setItem("loggedInUserID", loggedInUserID);
-                                localStorage.setItem("loggedInUsername", loggedInUsername);
-                                localStorage.setItem("loggedInUserRole", loggedInUserRole);
-                                window.location.href = "/";  // redirect back to index.html
-                            })
-                            .catch((error) => {
-                                console.log(error);
-                            });
-                    });
-                }
-                else if (localStorage.getItem("token")){
-                    const logInProfileHtml = `
-                    <div class="col col-4 col-lg-4 col-sm-4" id="signInDiv">
-                    <!-- sign in account functionality with the use of dropdown-menu -->
-                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-user"></i>
-                        </button>
-                        <!-- Dropdown-menu -->
-                        <div class="dropdown-menu w-25 dropdown-menu-end">
-                            <form class="px-4 py-3" id="logout-form">
-                                <div class="mb-3">
-                                    <label for="dropDownFormUsername" class="form-label">Welcome back ${localStorage.getItem("loggedInUsername")}!</label>
-                                </div>
-                                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgyj-JPkyNW4pC8pDJgy7wfW4-MK87ycdFLBm19zw5m5tnwQ8cSg6gKO2hC5uxYscbOYc_GTVjxSyFGa2r8ae-eVoVd2t0umPfQi9wN50Ha5vc_GzCeQLT-EcBEbi-_GdaQSPc1Y5BwtdJgqhTUNVYAnIjVjxr07rmdzE1SE5C12Y-meWuXwxATF2WYVA/s135/spairLogo.png" width="200" height="200" alt="">
-                                <div class="dropdown-divider"></div>
-                                <button id="signOut" type="submit" class="btn bg-light border">Sign out</button>
-                            </form>
-                            <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" id = "viewProfileLink" href="/viewProfile/">View profile &&#128242;?</a>
-                        </div>
-                    </div>
-                    `
-                    $('#threebuttons').append(logInProfileHtml)
-                    $("#logout-form").submit((event) => {
-                        window.localStorage.clear();
-                        window.location.assign("http://localhost:3001/");
-                    });
-                    if(localStorage.getItem("loggedInUserRole") == "Admin"){
-                        const manageAirportFlightHtml = `
-                            <li class="nav-item">
-                                <a class="nav-link" href="/manageAirports/">MANAGE AIRPORT</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/manageFlights/">MANAGE FLIGHTS</a>
-                            </li>`;
-                        $('#menuNav').append(manageAirportFlightHtml);
-                    }
-                }
-            </script>
-        </header>
-        <main style="background-image: url('https://images.unsplash.com/photo-1628964178609-aec11c666040?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80');" id = "main">
-        
-            <div class="container py-3">
-                <div id="addFlight" class="py-5 px-3 mb-4 rounded-3"  style="background: rgba(255, 255, 255, 0.8);" >
-                    <!-- flightCode, aircraft, originAirportid, destinationAirportid, embarkDate, embarkTime, arrivedDate, arrivedTime, travelTime, price -->
-                    <h1 class="display-5 fw-bold">Add Flight</h1>
-                    <form class="px-4 py-3" id="addFlight-form">
-                        <div class="row pb-2"> <!--flight cose & aircraft input-->
-                            <div class="col-sm">
-                                <div class="d-inline-flex mb-2">
-                                    <label id="flight-code" for="flightcode-input" class="form-label w-50 m-auto">Flight code</label>
-                                    <div class="container p-0">
-                                        <div class="input-group">
-                                            <span class="input-group-text">@SP</span>
-                                            <input required type="text" class="form-control" id="flightcode-input" placeholder="123" length="5" pattern="[0-9]{3}">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm">
-                                <div class="d-inline-flex mb-2">
-                                    <label id="aircraft" for="aircraft-input" class="form-label w-50 m-auto">Aircraft Model</label>
-                                    <div class="container p-0">
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-arrow-right-square"></i></span>
-                                            <input required type="text" class="form-control" id="aircraft-input" placeholder="BOEING 737">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row pb-2"> <!--ori & destin input-->
-                            <div class="col-sm">
-                                <div class="mb-2">
-                                    <label id="origin-label" for="origin-input" class="form-label">Origin</label>
-                                    <div class="container p-0">
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="bi-pin-map"></i> </span>
-                                            <select required class="form-select form-control" id="originOptions">
-                                                <option value="" disabled selected>Select here</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm">
-                                <div class="mb-2">
-                                    <label id="destination-label" for="destination-input" class="form-label">Destination</label>
-                                    <div class="container p-0">
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="bi-pin-map-fill"></i> </span>
-                                            <select required class="form-select form-control" id="destinationOptions">
-                                                <option value="" disabled selected>Select here</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row pb-2"> <!--embark date & time input-->
-                            <div class="col-sm">
-                                <div id="embark-date" class="mb-2 ">
-                                    <label id="embark-date-label" for="embark-date-input" class="form-label w-50">Embark date</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i class="bi-calendar"></i></span>
-                                        <input required type="date" class="form-control" id="embark-date-input" aria-describedby="embark-date-label"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm">
-                                <div id="embark-time" class="mb-2">
-                                    <label id="embark-time-label" for="embark-time-input" class="form-label">Embark time</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i class="bi bi-alarm"></i></span>
-                                        <input required type="time" class="form-control " id="embark-time-input" aria-describedby="embark-time-label"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row pb-2"> <!--travel time & price input-->
-                            <div class="col-sm">
-                                <div id="travel-time" class="mb-2 d-inline-flex">
-                                    <label id="travel-time-label" for="travel-time-input" class="form-label w-50 m-auto">Travel time</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i class="bi bi-hand-index"></i></span>
-                                        <input required type="number" min="0" max="24" onchange="if(parseInt(this.value,10)<10)this.value='0'+this.value;" class="form-control" id="travel-hour-time-input" aria-describedby="travel-time-label"/><p class="m-auto p-2">hours</p>
-                                        <input required type="number" min="0" max="59" onchange="if(parseInt(this.value,10)<10)this.value='0'+this.value;" class="form-control" id="travel-minute-time-input" aria-describedby="travel-time-label"/><p class="m-auto p-2">mins</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm">
-                                <div id="price" class="mb-2 d-inline-flex">
-                                    <label id="price-label" for="price-input" class="form-label m-auto">Price</label>
-                                    <div class="input-group mx-5">
-                                        <span class="input-group-text"><i class="bi bi-tags-fill"></i></span>
-                                        <input required type="number" min="0.00" max="10000.00" step="0.01" class="form-control" id="price-input" aria-describedby="price-label" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <button id="confirmNewFlight" type="submit" class="btn bg-light border">Confirm Add</button>
-                    </form>
-                </div>
-                
-            </div>
-        </main>
-        <script>
-            axios.get(`${baseUrl}/allAirports/`)
-                    .then((response) => {
-                        const airports = response.data.result;
-                        airports.forEach((airport) => {
-                            const airportHtml = `
-                            <option value="${airport.airportid}" data-subtext = "${airport.country}">${airport.name}</option>
-                            `;
-                            $("#originOptions").append(airportHtml);
-                            $("#destinationOptions").append(airportHtml);
-                        });
-                    })
-                    .catch((error) => {
-                        console.log(error)
-                    });
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/cssNav/">
+        <title>SP Airlines - Manage Flights | Official website</title>
+        <link rel="icon" type="image/x-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgyj-JPkyNW4pC8pDJgy7wfW4-MK87ycdFLBm19zw5m5tnwQ8cSg6gKO2hC5uxYscbOYc_GTVjxSyFGa2r8ae-eVoVd2t0umPfQi9wN50Ha5vc_GzCeQLT-EcBEbi-_GdaQSPc1Y5BwtdJgqhTUNVYAnIjVjxr07rmdzE1SE5C12Y-meWuXwxATF2WYVA/s135/spairLogo.png">
 
-            $("#addFlight-form").submit((event) => {
+        <!-- links to external javascript files and the javascript file to generate random quote functionality -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </head>
+<body>
+    <header>
+        <!-- the start of the nav bar -->
+        <div id="navBar" class="navbar d-flex align-items-center w-100 m-0 p-0 navbar-expand-lg">
+            <!-- the collapse of the nav bar if the width of the screen decrease (lg) -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#subNav" aria-controls="subNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <!-- the logo and the name brand -->
+            <a class="navbar-brand" href="#">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHXIf5q-XY_VsTwml7tKNw9ekiDbH64w2_PQxhP7TIw_5ljaCmCp4pqLREKwMesT1IaiMSsrc6EcMfZaY_OeC1qExZ86XX7V4nWZ9WSsoQcuNZlI6f-5HC3fSnzfX9UuCpA-ph9-gLB8WlPte9Txk7JXOE-RPh0UTIw2ZTiuTd_TrF9CfvyqX8_OgtSQ/s1413/spairNavLogo.png" width="230" height="90" alt="">
+            </a>
+
+            <div class="container m-0 p-0">
+                <div class="collapse navbar-collapse" id="subNav">
+                    <!-- the nav bar menu to access to other pages -->
+                    <ul class="navbar-nav ps-4 mx-auto" id="menuNav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">BOOK + PLANS</a>
+                        </li>
+                        <li class="nav-item dropdown" >
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">TRAVEL INFO</a>
+                            <ul class="dropdown-menu" id="navTravel">
+                                <li><a class="dropdown-item" href="/">COVID 19</a></li>
+                                <li><a class="dropdown-item" href="/">CHECK IN</a></li>
+                                <li><a class="dropdown-item" href="/">CONTACT US</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">FEEDBACK</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="col3" class="col col-3 align-items-center">
+                    <!-- 3 buttons to use some external functionalities -->
+                    <div class="row" id='threebuttons'>
+                        <!-- search bar functionality with the use of offcanvas -->
+                        <div class="col col-4 col-lg-4 col-sm-4">
+                            <button class="btn btn-default" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop"><i class="fas fa-search"></i></button>
+                            <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+                            <div class="offcanvas-header">
+                                <h5 id="offcanvasTopLabel">Looking for something?</h5>
+                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body">
+                                <form class="d-flex">
+                                    <input class="form-control w-50" type="search" placeholder="Click here to type" aria-label="Search">
+                                    <button id="searchButton" class="btn border bg-white btn-sm ms-2" type="submit">Search</button>
+                                </form>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col col-4 col-lg-4 col-sm-4">
+                            <!-- the quote generator functionality with the use of modal-->
+                            <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#randomModal">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                            
+                            <!-- Modal -->
+                            <div class="modal fade" id="randomModal" tabindex="-1" aria-labelledby="randomModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="randomModalLabel">Day day up up &#127849;&#127848;&#127789;&#127854;&#127853;</h4>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <h2 id="theContent" class="fst-italic"></h2>
+                                            <h5 id="theAuthor" class="text-end"></h5>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button id="generateForMe" type="button" class="btn btn-default">Get the gift of the day-ie &#127873;</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- the end of the nav bar -->
+        <script>
+            const baseUrl = "http://localhost:8081";
+            if(localStorage.getItem("token") == null){ // if no token in local storage , then do log in
+                console.log('inside no token')
+                const logInFormHtml = `
+                <div class="col col-4 col-lg-4 col-sm-4" id="signInDiv">
+                <!-- sign in account functionality with the use of dropdown-menu -->
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <!-- Dropdown-menu -->
+                    <div class="dropdown-menu w-25 dropdown-menu-end">
+                        <form class="px-4 py-3" id="login-form">
+                            <div class="mb-3">
+                                <label for="dropDownFormUsername" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="dropDownFormUsername" placeholder="Singapore Polytechnic">
+                            </div>
+                            <div class="mb-3">
+                                <label for="dropDownFormPwd" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="dropDownFormPwd" placeholder="Password">
+                            </div>
+                            <div class="mb-3" id="loginFunctions">
+                                <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="dropdownCheck">
+                                <label class="form-check-label" for="dropdownCheck">
+                                    Remember me
+                                </label>
+                                </div>
+                            </div>
+                            <button id="signIn" type="submit" class="btn bg-light border">Sign in</button>
+                        </form>
+                        <div class="dropdown-divider"></div>
+                        <div id = "signInDisappear">
+                            <a class="dropdown-item" id="signUpLink" href="/signup/">New around here? Sign up&#128123;</a>
+                        </div>
+                    </div>
+                </div>
+                `
+                $('#threebuttons').append(logInFormHtml)
+                $("#login-form").submit((event) => {
                     // prevent page reload
                     event.preventDefault();
-                    //flightCode, aircraft, originAirportid, destinationAirportid, embarkDate, embarkTime, arrivedDate, arrivedTime, travelTime, price
-
-                    var newFlightCode = "SP" + document.getElementById("flightcode-input").value;
-                    const newFlightAircraft = $("#aircraft-input").val();
-                    const originInput = document.getElementById("originOptions").value;
-                    const destinationInput = document.getElementById("destinationOptions").value;
-                    const newFlightEmbarkDate = document.getElementById("embark-date-input").value;
-                    const newFlightEmbarkTime = document.getElementById("embark-time-input").value + ":00";
-                    const newFlightTravelTime = document.getElementById("travel-hour-time-input").value + ":" + document.getElementById("travel-minute-time-input").value + ":00";
-                    var newFlightArrivedDate;
-                    var newFlightArrivedTime;
-                    if (parseInt(newFlightEmbarkTime.slice(0,2)) *60 + parseInt(newFlightEmbarkTime.slice(3,5)) + parseInt(newFlightTravelTime.slice(0,2))*60 + parseInt(newFlightTravelTime.slice(3,5)) >= 1440){
-                        newFlightArrivedDate = `${newFlightEmbarkDate.slice(0,9)}${parseInt(newFlightEmbarkDate.slice(9))+1}`;
-                        if (parseInt(newFlightEmbarkTime.slice(3,5)) + parseInt(newFlightTravelTime.slice(3,5)) >= 60){
-                            newFlightArrivedTime = `${parseInt(newFlightEmbarkTime.slice(0,2)) + parseInt(newFlightTravelTime.slice(0,2)) - 24 + 1}:${parseInt(newFlightEmbarkTime.slice(3,5)) + parseInt(newFlightTravelTime.slice(3,5)) - 60}:00`;
-                        }
-                        else{
-                            newFlightArrivedTime = `${parseInt(newFlightEmbarkTime.slice(0,2)) + parseInt(newFlightTravelTime.slice(0,2)) - 24}:${parseInt(newFlightEmbarkTime.slice(3,5)) + parseInt(newFlightTravelTime.slice(3,5))}:00`
-                        }
-                    }
-                    else{
-                        newFlightArrivedDate = newFlightEmbarkDate;
-                        if (parseInt(newFlightEmbarkTime.slice(3,5)) + parseInt(newFlightTravelTime.slice(3,5)) >= 60){
-                            newFlightArrivedTime = `${parseInt(newFlightEmbarkTime.slice(0,2)) + parseInt(newFlightTravelTime.slice(0,2)) + 1}:${parseInt(newFlightEmbarkTime.slice(3,5)) + parseInt(newFlightTravelTime.slice(3,5)) - 60}:00`;
-                        }
-                        else{
-                            newFlightArrivedTime = `${parseInt(newFlightEmbarkTime.slice(0,2)) + parseInt(newFlightTravelTime.slice(0,2))}:${parseInt(newFlightEmbarkTime.slice(3,5)) + parseInt(newFlightTravelTime.slice(3,5))}:00`
-                        }
-                    }
-                    const newFlightPrice = document.getElementById("price-input").value;
-                    const requestBody = {
-                        newFlightCode : newFlightCode,           
-                        newFlightAircraft : newFlightAircraft,
-                        originInput : originInput,          
-                        destinationInput : destinationInput,
-                        newFlightEmbarkDate : newFlightEmbarkDate,          
-                        newFlightEmbarkTime : newFlightEmbarkTime,
-                        newFlightArrivedDate: newFlightArrivedDate,
-                        newFlightArrivedTime: newFlightArrivedTime,
-                        newFlightTravelTime: newFlightTravelTime,
-                        newFlightPrice: newFlightPrice
-                    };
-                    console.log(requestBody);
-                    axios.post(`${baseUrl}/addFlight/`, requestBody)
-                        .then((response) => {
-                            console.log(response)
-                            const successfulMsgHtml = `
-                            <div class="alert alert-success alert-dismissible d-flex align-items-center" role="alert">
-                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
-                                <div>
-                                    The new flight has been added successfully!
-                                </div>
-                                <button type="button" class="btn-close" id="closeBtn" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>`;
-                            $("#main").prepend(successfulMsgHtml);
     
+                    const username = $("#dropDownFormUsername").val();
+                    const password = $("#dropDownFormPwd").val();
+                    const requestBody = {
+                        username: username,
+                        password: password
+                    };
+    
+                    axios.post(`${baseUrl}/login/`, requestBody)
+                        .then((response) => {
+                            const token = response.data.token;
+                            const loggedInUserID = response.data.user_id;
+                            const loggedInUsername = response.data.username;
+                            const loggedInUserRole = response.data.role
+                            localStorage.setItem("token", token);
+                            localStorage.setItem("loggedInUserID", loggedInUserID);
+                            localStorage.setItem("loggedInUsername", loggedInUsername);
+                            localStorage.setItem("loggedInUserRole", loggedInUserRole);
+                            window.location.href = "/";  // redirect back to index.html
                         })
                         .catch((error) => {
+                            alert("No such user exists!")
+                            location.reload();
                             console.log(error);
-                            const failedMsgHtml = `
-                            <div class="alert alert-danger d-flex align-items-center" role="alert">
-                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-                                <div>
-                                    Failed to add the new flight!
-                                </div>
-                                <button type="button" class="btn-close" id="closeBtn" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>`;
-                            $("#main").prepend(failedMsgHtml);
                         });
                 });
-            $("#closeBtn").click((event) =>{
-                location.reload();
-            });
+            }
+            else if (localStorage.getItem("token")){
+                const logInProfileHtml = `
+                <div class="col col-4 col-lg-4 col-sm-4" id="signInDiv">
+                <!-- sign in account functionality with the use of dropdown-menu -->
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <!-- Dropdown-menu -->
+                    <div class="dropdown-menu w-25 dropdown-menu-end">
+                        <form class="px-4 py-3" id="logout-form">
+                            <div class="mb-3">
+                                <label for="dropDownFormUsername" class="form-label">Welcome back ${localStorage.getItem("loggedInUsername")}!</label>
+                            </div>
+                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgyj-JPkyNW4pC8pDJgy7wfW4-MK87ycdFLBm19zw5m5tnwQ8cSg6gKO2hC5uxYscbOYc_GTVjxSyFGa2r8ae-eVoVd2t0umPfQi9wN50Ha5vc_GzCeQLT-EcBEbi-_GdaQSPc1Y5BwtdJgqhTUNVYAnIjVjxr07rmdzE1SE5C12Y-meWuXwxATF2WYVA/s135/spairLogo.png" width="200" height="200" alt="">
+                            <div class="dropdown-divider"></div>
+                            <button id="signOut" type="submit" class="btn bg-light border">Sign out</button>
+                        </form>
+                        <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" id = "viewProfileLink" href="/viewProfile/">View profile &&#128242;?</a>
+                    </div>
+                </div>
+                `
+                $('#threebuttons').append(logInProfileHtml)
+                $("#logout-form").submit((event) => {
+                    window.localStorage.clear();
+                    window.location.assign("http://localhost:3001/");
+                });
+                if(localStorage.getItem("loggedInUserRole") == "Admin"){
+                    const manageAirportFlightHtml = `
+                        <li class="nav-item">
+                            <a class="nav-link" href="/manageAirports/">MANAGE AIRPORT</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/manageFlights/" id="selectedTab"><u>MANAGE FLIGHTS</u></a>
+                        </li>`;
+                    $('#menuNav').append(manageAirportFlightHtml);
+                }
+            }
         </script>
+    </header>
+    <main style="background-image: url('https://images.unsplash.com/photo-1628964178609-aec11c666040?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80');" id = "main">
     
+        <div class="container py-3">
+            <div id="addFlight" class="py-5 px-3 mb-4 rounded-3"  style="background: rgba(255, 255, 255, 0.8);" >
+                <!-- flightCode, aircraft, originAirportid, destinationAirportid, embarkDate, embarkTime, arrivedDate, arrivedTime, travelTime, price -->
+                <h1 class="display-5 fw-bold">Add Flight</h1>
+                <form class="px-4 py-3" id="addFlight-form">
+                    <div class="row pb-2"> <!--flight cose & aircraft input-->
+                        <div class="col-sm">
+                            <div class="d-inline-flex mb-2">
+                                <label id="flight-code" for="flightcode-input" class="form-label w-50 m-auto">Flight code</label>
+                                <div class="container p-0">
+                                    <div class="input-group">
+                                        <span class="input-group-text">@SP</span>
+                                        <input required type="text" class="form-control" id="flightcode-input" placeholder="123" length="5" pattern="[0-9]{3}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="d-inline-flex mb-2">
+                                <label id="aircraft" for="aircraft-input" class="form-label w-50 m-auto">Aircraft Model</label>
+                                <div class="container p-0">
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-arrow-right-square"></i></span>
+                                        <input required type="text" class="form-control" id="aircraft-input" placeholder="BOEING 737">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pb-2"> <!--ori & destin input-->
+                        <div class="col-sm">
+                            <div class="mb-2">
+                                <label id="origin-label" for="origin-input" class="form-label">Origin</label>
+                                <div class="container p-0">
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi-pin-map"></i> </span>
+                                        <select required class="form-select form-control" id="originOptions">
+                                            <option value="" disabled selected>Select here</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="mb-2">
+                                <label id="destination-label" for="destination-input" class="form-label">Destination</label>
+                                <div class="container p-0">
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi-pin-map-fill"></i> </span>
+                                        <select required class="form-select form-control" id="destinationOptions">
+                                            <option value="" disabled selected>Select here</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pb-2"> <!--embark date & time input-->
+                        <div class="col-sm">
+                            <div id="embark-date" class="mb-2 ">
+                                <label id="embark-date-label" for="embark-date-input" class="form-label w-50">Embark date</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi-calendar"></i></span>
+                                    <input required type="date" class="form-control" id="embark-date-input" aria-describedby="embark-date-label"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div id="embark-time" class="mb-2">
+                                <label id="embark-time-label" for="embark-time-input" class="form-label">Embark time</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-alarm"></i></span>
+                                    <input required type="time" class="form-control " id="embark-time-input" aria-describedby="embark-time-label"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pb-2"> <!--travel time & price input-->
+                        <div class="col-sm">
+                            <div id="travel-time" class="mb-2 d-inline-flex">
+                                <label id="travel-time-label" for="travel-time-input" class="form-label w-50 m-auto">Travel time</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-hand-index"></i></span>
+                                    <input required type="number" min="0" max="24" onchange="if(parseInt(this.value,10)<10)this.value='0'+this.value;" class="form-control" id="travel-hour-time-input" aria-describedby="travel-time-label"/><p class="m-auto p-2">hours</p>
+                                    <input required type="number" min="0" max="59" onchange="if(parseInt(this.value,10)<10)this.value='0'+this.value;" class="form-control" id="travel-minute-time-input" aria-describedby="travel-time-label"/><p class="m-auto p-2">mins</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div id="price" class="mb-2 d-inline-flex">
+                                <label id="price-label" for="price-input" class="form-label m-auto">Price</label>
+                                <div class="input-group mx-5">
+                                    <span class="input-group-text"><i class="bi bi-tags-fill"></i></span>
+                                    <input required type="number" min="0.00" max="10000.00" step="0.01" class="form-control" id="price-input" aria-describedby="price-label" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="confirmNewFlight" type="submit" class="btn bg-light border">Confirm Add</button>
+                </form>
+            </div>
+            
+        </div>
+    </main>
+    <script src = "/jsRandom/"></script>
+    <script>
+        axios.get(`${baseUrl}/allAirports/`)
+                .then((response) => {
+                    const airports = response.data.result;
+                    airports.forEach((airport) => {
+                        const airportHtml = `
+                        <option value="${airport.airportid}" data-subtext = "${airport.country}">${airport.name}</option>
+                        `;
+                        $("#originOptions").append(airportHtml);
+                        $("#destinationOptions").append(airportHtml);
+                    });
+                })
+                .catch((error) => {
+                    console.log(error)
+                });
+
+        $("#addFlight-form").submit((event) => {
+                // prevent page reload
+                event.preventDefault();
+                //flightCode, aircraft, originAirportid, destinationAirportid, embarkDate, embarkTime, arrivedDate, arrivedTime, travelTime, price
+
+                var newFlightCode = "SP" + document.getElementById("flightcode-input").value;
+                const newFlightAircraft = $("#aircraft-input").val();
+                const originInput = document.getElementById("originOptions").value;
+                const destinationInput = document.getElementById("destinationOptions").value;
+                const newFlightEmbarkDate = document.getElementById("embark-date-input").value;
+                const newFlightEmbarkTime = document.getElementById("embark-time-input").value + ":00";
+                const newFlightTravelTime = document.getElementById("travel-hour-time-input").value + ":" + document.getElementById("travel-minute-time-input").value + ":00";
+                var newFlightArrivedDate;
+                var newFlightArrivedTime;
+                if (parseInt(newFlightEmbarkTime.slice(0,2)) *60 + parseInt(newFlightEmbarkTime.slice(3,5)) + parseInt(newFlightTravelTime.slice(0,2))*60 + parseInt(newFlightTravelTime.slice(3,5)) >= 1440){
+                    newFlightArrivedDate = `${newFlightEmbarkDate.slice(0,9)}${parseInt(newFlightEmbarkDate.slice(9))+1}`;
+                    if (parseInt(newFlightEmbarkTime.slice(3,5)) + parseInt(newFlightTravelTime.slice(3,5)) >= 60){
+                        newFlightArrivedTime = `${parseInt(newFlightEmbarkTime.slice(0,2)) + parseInt(newFlightTravelTime.slice(0,2)) - 24 + 1}:${parseInt(newFlightEmbarkTime.slice(3,5)) + parseInt(newFlightTravelTime.slice(3,5)) - 60}:00`;
+                    }
+                    else{
+                        newFlightArrivedTime = `${parseInt(newFlightEmbarkTime.slice(0,2)) + parseInt(newFlightTravelTime.slice(0,2)) - 24}:${parseInt(newFlightEmbarkTime.slice(3,5)) + parseInt(newFlightTravelTime.slice(3,5))}:00`
+                    }
+                }
+                else{
+                    newFlightArrivedDate = newFlightEmbarkDate;
+                    if (parseInt(newFlightEmbarkTime.slice(3,5)) + parseInt(newFlightTravelTime.slice(3,5)) >= 60){
+                        newFlightArrivedTime = `${parseInt(newFlightEmbarkTime.slice(0,2)) + parseInt(newFlightTravelTime.slice(0,2)) + 1}:${parseInt(newFlightEmbarkTime.slice(3,5)) + parseInt(newFlightTravelTime.slice(3,5)) - 60}:00`;
+                    }
+                    else{
+                        newFlightArrivedTime = `${parseInt(newFlightEmbarkTime.slice(0,2)) + parseInt(newFlightTravelTime.slice(0,2))}:${parseInt(newFlightEmbarkTime.slice(3,5)) + parseInt(newFlightTravelTime.slice(3,5))}:00`
+                    }
+                }
+                const newFlightPrice = document.getElementById("price-input").value;
+                const requestBody = {
+                    newFlightCode : newFlightCode,           
+                    newFlightAircraft : newFlightAircraft,
+                    originInput : originInput,          
+                    destinationInput : destinationInput,
+                    newFlightEmbarkDate : newFlightEmbarkDate,          
+                    newFlightEmbarkTime : newFlightEmbarkTime,
+                    newFlightArrivedDate: newFlightArrivedDate,
+                    newFlightArrivedTime: newFlightArrivedTime,
+                    newFlightTravelTime: newFlightTravelTime,
+                    newFlightPrice: newFlightPrice
+                };
+                console.log(requestBody);
+                axios.post(`${baseUrl}/addFlight/`, requestBody)
+                    .then((response) => {
+                        console.log(response)
+                        const successfulMsgHtml = `
+                        <div class="alert alert-success alert-dismissible d-flex align-items-center" role="alert">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                            <div>
+                                The new flight has been added successfully!
+                            </div>
+                            <button type="button" class="btn-close" id="closeBtn" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>`;
+                        $("#main").prepend(successfulMsgHtml);
+
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        const failedMsgHtml = `
+                        <div class="alert alert-danger d-flex align-items-center" role="alert">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                            <div>
+                                Failed to add the new flight!
+                            </div>
+                            <button type="button" class="btn-close" id="closeBtn" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>`;
+                        $("#main").prepend(failedMsgHtml);
+                    });
+            });
+        $("#closeBtn").click((event) =>{
+            location.reload();
+        });
+    </script>
+    <footer class="bd-footer py-5 bg-dark mt-0" id="footer">
+        <div id="footerContainer" class="container">
+            <div id="footerRow" class="row p-0">
+                <!-- the Subscription box with entering the email part -->
+                <div id="footerCol1" class="col mb-3">
+                    <form>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" placeholder="Enter email address">
+                        </div>
+
+                        <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input bg-default border" id="subscriptionCheckbox">
+                        <label class="form-check-label" for="subscriptionCheckbox">Subscribe to receive communications from #Singapore Polytechnic Airlines about our stories and services.
+                        By subscribing, you confirm you have read and accept our privacy policy.</label>
+                        </div>
+                        <button id="submitEmail" class="btn btn-light">Submit &#128231;</button>
+                    </form>
+                </div>
+
+                <!-- the links buttons to other social media -->
+                <div id="footerCol2" class="col offset-lg-1 mb-3 align-self-end d-flex flex-column align-items-end">
+                    <div class="text-end">
+                        <a href="/"><i class="fas fa-map-marker-alt fa-2x"></i></a>
+                        <a href="/"><i class="fab fa-facebook-f fa-2x"></i></a>
+                        <a href= "/"><i class="fab fa-instagram fa-2x"></i></a>
+                        <a href="/"><i class="fab fa-twitter fa-2x"></i></a>
+                    </div>
+                    <p>&#169;2022, #SINGAPOREPOLYTECHNICAIRLINES</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- the javascript file to display alert after click the subscribing button -->
+        <script>
+            const btn = document.querySelector('#submitEmail');
+            btn.addEventListener('click', () => alert("Confirm subscribing #PlexeusLove?"));
+        </script>
+    </footer>
 </body>
 </html>

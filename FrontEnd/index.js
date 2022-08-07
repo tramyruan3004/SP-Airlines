@@ -31,6 +31,19 @@ app.get("/signup/", (req, res) => {
 app.get("/viewprofile/", (req, res) => {
   res.sendFile("/public/viewProfile.html", { root: __dirname });
 });
+
+
+app.get("/cssNav/", (req, res) => {
+  res.sendFile("/css/spair_navBarnFooter.css", { root: __dirname });
+});
+
+app.get("/cssViewProfile/", (req, res) => {
+  res.sendFile("/css/viewProfile.css", { root: __dirname });
+});
+
+app.get("/jsRandom/", (req, res) => {
+  res.sendFile("/public/js/randomQuote.js", { root: __dirname });
+});
 //--------------------------------------
 
 // equivalent to our Assignment Endpoint03 viewProfile

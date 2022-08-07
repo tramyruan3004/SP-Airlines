@@ -30,7 +30,7 @@ module.exports = {
         });
     },
 // Endpoint 01 POST /users --used
-    insertUser: (username, email, contact, password, role, profile_pic_url, callback)=>{
+    insertUser: (username, email, contact, password, role, callback)=>{
         var conn = db.getConnection();
         conn.connect((err)=>{
             if (err){
@@ -38,8 +38,8 @@ module.exports = {
                 return callback(err, null);
             } else{
                 console.log("Connected: Inside users.js insertUser()!");
-                var sql = `INSERT INTO users (username, email, contact, password, role, profile_pic_url) values(?,?,?,?,?,?)`;
-                conn.query(sql, [username, email, contact, password, role, profile_pic_url], (err, result) => {
+                var sql = `INSERT INTO users (username, email, contact, password, role) values(?,?,?,?,?)`;
+                conn.query(sql, [username, email, contact, password, role], (err, result) => {
                     conn.end();
                     if(err){
                         console.log(err);
@@ -53,37 +53,7 @@ module.exports = {
         });
     },
 
-// Endpoint 02 GET /users
-    getUsers: (callback)=> {
-        var conn = db.getConnection();
-        conn.connect(function (err) {
-            if (err) {
-                console.log(err);
-                return callback(err,null);
-            }
-            else {
-                console.log("Connected: Inside users.js getUsers()!");
-                var sql = 
-                `
-                SELECT 
-                    userid, username, email, contact, role, profile_pic_url, created_at
-                FROM
-                    users
-                `;
-                conn.query(sql, function (err, result) {
-                    conn.end();
-                    if (err) {
-                        console.log(err);
-                        return callback(err,null);
-                    } else {
-                        return callback(null, result);
-                    }
-                });
-            }
-        });
-    },
-
-// Endpoint 03 GET /user/:id
+    // Endpoint 03 GET /user/:id --used
     getUser: (userid, callback)=> {
         var conn = db.getConnection();
         conn.connect(function (err) {
@@ -115,7 +85,7 @@ module.exports = {
         });
     },
 
-// Endpoint 04 PUT /users/:id
+    // Endpoint 04 PUT /users/:id --used
     updateUser: (username, email, contact, password, role, profile_pic_url, userid, callback)=> { 
         var conn = db.getConnection(); 
         conn.connect(function (err) {
@@ -151,7 +121,38 @@ module.exports = {
             }
         });
     },
+//========================================
 
+// Endpoint 02 GET /users
+    getUsers: (callback)=> {
+        var conn = db.getConnection();
+        conn.connect(function (err) {
+            if (err) {
+                console.log(err);
+                return callback(err,null);
+            }
+            else {
+                console.log("Connected: Inside users.js getUsers()!");
+                var sql = 
+                `
+                SELECT 
+                    userid, username, email, contact, role, profile_pic_url, created_at
+                FROM
+                    users
+                `;
+                conn.query(sql, function (err, result) {
+                    conn.end();
+                    if (err) {
+                        console.log(err);
+                        return callback(err,null);
+                    } else {
+                        return callback(null, result);
+                    }
+                });
+            }
+        });
+    },
+    
 // Endpoint (advanced 01) PUT /userImg/:id
     updateImg: (randomImg, userid, callback)=>{
         var conn = db.getConnection();

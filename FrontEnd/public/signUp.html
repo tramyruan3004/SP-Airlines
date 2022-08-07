@@ -1,3 +1,14 @@
+<!--
+        Module Code	:	        ST0503
+        Module Name	:	        Back-End Web Development
+        Acad Year/Semester	:	2022/2023 Semester 1
+        Assignment Title	:	CA2 – SP Air Website
+    
+        SP Airlines | Official website
+        Author: Ruan Chamei
+    
+        Filename: signUp.html
+-->
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -6,9 +17,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"/>
-        <!-- <link href="css/index.css" rel="stylesheet">
-        <link href="spair_navBarnFooter.css" rel="stylesheet"> -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/cssNav/">
         <title>SP Airlines | Official website</title>
         <link rel="icon" type="image/x-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgyj-JPkyNW4pC8pDJgy7wfW4-MK87ycdFLBm19zw5m5tnwQ8cSg6gKO2hC5uxYscbOYc_GTVjxSyFGa2r8ae-eVoVd2t0umPfQi9wN50Ha5vc_GzCeQLT-EcBEbi-_GdaQSPc1Y5BwtdJgqhTUNVYAnIjVjxr07rmdzE1SE5C12Y-meWuXwxATF2WYVA/s135/spairLogo.png">
 
@@ -36,21 +46,18 @@
                     <!-- the nav bar menu to access to other pages -->
                     <ul class="navbar-nav ps-4 mx-auto" id="menuNav">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/deals/">DEALS</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="/">BOOK + PLANS</a>
                         </li>
                         <li class="nav-item dropdown" >
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false"><u>TRAVEL INFO</u></a>
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">TRAVEL INFO</a>
                             <ul class="dropdown-menu" id="navTravel">
-                                <li><a class="dropdown-item" href="/covid19/">COVID 19</a></li>
-                                <li><a class="dropdown-item" href="/checkin/">CHECK IN</a></li>
-                                <li><a class="dropdown-item" href="/contactus/"><u>CONTACT US</u></a></li>
+                                <li><a class="dropdown-item" href="/">COVID 19</a></li>
+                                <li><a class="dropdown-item" href="/">CHECK IN</a></li>
+                                <li><a class="dropdown-item" href="/">CONTACT US</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/feedback/">FEEDBACK</a>
+                            <a class="nav-link" href="/">FEEDBACK</a>
                         </li>
                     </ul>
                 </div>
@@ -169,6 +176,8 @@
                             window.location.href = "/";  // redirect back to index.html
                         })
                         .catch((error) => {
+                            alert("No such user exists!")
+                            location.reload();
                             console.log(error);
                         });
                 });
@@ -216,7 +225,7 @@
     </header>
     <main style="background-image: url('https://images.unsplash.com/photo-1501419737817-eadda6b445e3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1075&q=80');" id = "main">
         <div class="container py-4">
-            <div id="addAirport" class="py-5 px-3 mb-4 rounded-3"  style="background: rgba(255, 255, 255, 0.8);" >
+            <div id="addUser" class="py-5 px-3 mb-4 rounded-3"  style="background: rgba(255, 255, 255, 0.8);" >
                 <h1 class="display-5 fw-bold">Register account</h1>
                 <form class="px-4 py-3" id="addUser-form">
                     <div class="mb-3">
@@ -237,6 +246,10 @@
                         <label for="newPassword" class="form-label">Password</label>
                         <input required type="password" class="form-control" id="newPassword">
                     </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Profile picture</label>
+                        <input class="form-control" type="file" id="sampleFile">
+                    </div>
                     <div class="form-check mb-3">
                         <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
                         <label class="form-check-label" for="invalidCheck">
@@ -251,23 +264,52 @@
             </div>
         </div>
     </main>
+    <script src = "/jsRandom/"></script>
     <script>
         $("#addUser-form").submit((event) => {
         // prevent page reload
         event.preventDefault();
-
         const username = document.getElementById("newUsername").value;
         const email = document.getElementById("newEmail").value;
         const contact = document.getElementById("newContact").value;
         const password = document.getElementById("newPassword").value;
+        // const sampleFile = $('#sampleFile').prop('files')[0];
+        // let formData = new FormData()
+        // formData.append('file', sampleFile)
+        // console.log(sampleFile)
         const requestBody = {
             username:username,
             email:email,
             contact :contact,
             password : password,
             role:"Customer",
-            profile_pic_url:null
+            profile_pic_url: null
         };
+        // axios.post("/uploadProfilePic/", formData,{ headers: formData.getHeaders() })
+        //     .then((response) => {
+        //         console.log(response)
+        //         const successfulMsgHtml = `
+        //         <div class="alert alert-success alert-dismissible d-flex align-items-center" role="alert">
+        //             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+        //             <div>
+        //                 The new user has been added successfully!
+        //             </div>
+        //             <button type="button" class="btn-close" id="closeBtn" data-bs-dismiss="alert" aria-label="Close"></button>
+        //         </div>`;
+        //         $("#main").prepend(successfulMsgHtml);
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //         const failedMsgHtml = `
+        //         <div class="alert alert-danger d-flex align-items-center" role="alert">
+        //             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+        //             <div>
+        //                 Failed to add the new user!
+        //             </div>
+        //             <button type="button" class="btn-close" id="closeBtn" data-bs-dismiss="alert" aria-label="Close"></button>
+        //         </div>`;
+        //         $("#main").prepend(failedMsgHtml);
+        //     });
 
         axios.post(`${baseUrl}/addNewUser/`, requestBody)
             .then((response) => {
@@ -299,6 +341,44 @@
         location.reload();
     });
     </script>
+    <footer class="bd-footer py-5 bg-dark mt-0" id="footer">
+        <div id="footerContainer" class="container">
+            <div id="footerRow" class="row p-0">
+                <!-- the Subscription box with entering the email part -->
+                <div id="footerCol1" class="col mb-3">
+                    <form>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" placeholder="Enter email address">
+                        </div>
+
+                        <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input bg-default border" id="subscriptionCheckbox">
+                        <label class="form-check-label" for="subscriptionCheckbox">Subscribe to receive communications from #Singapore Polytechnic Airlines about our stories and services.
+                        By subscribing, you confirm you have read and accept our privacy policy.</label>
+                        </div>
+                        <button id="submitEmail" class="btn btn-light">Submit &#128231;</button>
+                    </form>
+                </div>
+
+                <!-- the links buttons to other social media -->
+                <div id="footerCol2" class="col offset-lg-1 mb-3 align-self-end d-flex flex-column align-items-end">
+                    <div class="text-end">
+                        <a href="/"><i class="fas fa-map-marker-alt fa-2x"></i></a>
+                        <a href="/"><i class="fab fa-facebook-f fa-2x"></i></a>
+                        <a href= "/"><i class="fab fa-instagram fa-2x"></i></a>
+                        <a href="/"><i class="fab fa-twitter fa-2x"></i></a>
+                    </div>
+                    <p>&#169;2022, #SINGAPOREPOLYTECHNICAIRLINES</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- the javascript file to display alert after click the subscribing button -->
+        <script>
+            const btn = document.querySelector('#submitEmail');
+            btn.addEventListener('click', () => alert("Confirm subscribing #PlexeusLove?"));
+        </script>
+    </footer>
     
 </body>
 </html>

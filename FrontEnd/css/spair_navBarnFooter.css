@@ -5,7 +5,7 @@
 
 /* the styling of the main part */
 main{
-    padding-top: 115px;
+    padding-top: 10px;
 }
 /* the styling of the nav bar */
 #navBar{
@@ -23,21 +23,15 @@ main{
 }
 
 .nav-link:focus, .dropdown-item:focus, 
-.nav-link:hover, .dropdown-item:hover,
-.nav-link:visited, .dropdown-item:visited{
-    color: black;
-    text-decoration: underline;
-    background-color: #f6f2f0;
-}
-
-.dropdown-menu{
+.nav-link:hover, .dropdown-item:hover, #selectedTab{
+    color: #B8505E;
     background-color: #f6f2f0;
 }
 
 /* Col3: the button menu */
-/* #offcanvasTop{
-    background-color: #f6f2f0;
-} */
+#offcanvasTop{
+    background-color: #F1F0E2;
+}
 
 .modal-backdrop{
     z-index: 0;
@@ -54,8 +48,8 @@ main{
 }
 
 /* Footer styling */
-footer{
-    background-color: #252525;
+.footer{
+    background-color:  #252525;
 }
 
 #footerContainer form, #footerCol2 p, footer i{
@@ -80,6 +74,12 @@ i:hover{
     filter: brightness(0.8);
 }
 
+.detailBtn, .detailBtn:hover, .detailBtn:focus{
+    outline:none; 
+    border-style: none; 
+    border: none;
+    box-shadow: none;
+}
 /* form-check styling */
 footer .form-check-input{
     background-color: #252525;
