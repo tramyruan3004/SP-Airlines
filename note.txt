@@ -1,0 +1,13 @@
+color palette:
+
+White Rock
+#F1F0E2
+
+Cutty Sark
+#556B6E
+
+Cadillac
+#B8505E
+
+Anzac
+#D9B143
